@@ -39,9 +39,9 @@ class CompletedTableViewController: UITableViewController {
     @IBAction func didPressEdit(_ sender: UIBarButtonItem) {
         isEditEnabled = !isEditEnabled
         if isEditEnabled {
-            self.navigationItem.rightBarButtonItem?.title = "Done"
+            self.navigationItem.rightBarButtonItem?.title = NavBar.done
         } else {
-            self.navigationItem.rightBarButtonItem?.title = "Edit"
+            self.navigationItem.rightBarButtonItem?.title = NavBar.edit
         }
     }
 
@@ -65,7 +65,7 @@ class CompletedTableViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "doneCell", for: indexPath) as! TodoTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: TodoCell.done, for: indexPath) as! TodoTableViewCell
         cell.task = todoTasks[indexPath.row]
         cell.indexPath = indexPath
         return cell
@@ -73,7 +73,7 @@ class CompletedTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isEditEnabled {
-            let controller = StoryBoard.get(type: AddEditViewController.self, controller: "AddEditViewController")
+            let controller = StoryBoard.get(type: AddEditViewController.self, controller: AddEdit.className)
             controller.task = todoTasks[indexPath.row]
             controller.taskType = .edit
             controller.taskIndex = viewModel.getIndex(task: todoTasks[indexPath.row])

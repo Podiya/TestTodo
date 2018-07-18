@@ -62,9 +62,25 @@ enum AppData {
     static func exists(path: String) -> Bool {
         return FileManager.default.fileExists(atPath: path)
     }
+
+    static func imageForKey(key: String) -> UIImage? {
+        var image: UIImage?
+        if let imageData = UserDefaults.standard.data(forKey: key) {
+            image = NSKeyedUnarchiver.unarchiveObject(with: imageData) as? UIImage
+        }
+        return image
+    }
+    static func setImage(image: UIImage?, forKey key: String) {
+        var imageData: NSData?
+        if let image = image {
+            imageData = NSKeyedArchiver.archivedData(withRootObject: image) as NSData?
+        }
+        AppData.set(imageData!, forKey: key)
+    }
 }
 
 enum ImageSaveError: Error {
     case removeError(error: String)
     case writeError(error: String)
+    case createDirectoryError(error: String)
 }

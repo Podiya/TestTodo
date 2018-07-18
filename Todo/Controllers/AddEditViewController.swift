@@ -13,6 +13,7 @@ import Toaster
 
 class AddEditViewController: UIViewController {
 
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollViewBottom: NSLayoutConstraint!
     @IBOutlet weak var dateTime: UILabel!
     @IBOutlet var priorities: [UIButton]!
@@ -34,7 +35,7 @@ class AddEditViewController: UIViewController {
             item.backBarButtonItem  = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: self, action:
                 #selector(self.didPressBack))
         }
-        self.navigationItem.setRightBarButton(UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action:
+        self.navigationItem.setRightBarButton(UIBarButtonItem(title: NavBar.done, style: UIBarButtonItemStyle.done, target: self, action:
                             #selector(self.didPressDone)), animated: true)
         self.dateTime.text = Date().formated()
         self.isCompleted.isEnabled = taskType == .edit
@@ -60,7 +61,7 @@ class AddEditViewController: UIViewController {
     @objc func didPressDone() {
         guard let date = dateTime.text!.date() else { return }
         if date < Date() {
-            Toast(text: "Please select future date", duration: Delay.short).show()
+            Toast(text: Alert.selectFutureDate, duration: Delay.short).show()
         }
         viewModel.task = Task(
             id: viewModel.id,
@@ -81,7 +82,7 @@ class AddEditViewController: UIViewController {
         guard let date = dateTime.text!.date() else { return }
         if task.isCompleted && date < Date() {
             sender.setOn(true, animated: true)
-            Toast(text: "Please select future date", duration: Delay.short).show()
+            Toast(text: Alert.selectFutureDate, duration: Delay.short).show()
         }
     }
 
@@ -107,6 +108,7 @@ class AddEditViewController: UIViewController {
         datePicker.addTarget(self, action: #selector(pickedDate), for: .valueChanged)
         datePicker.isHidden = false
         scrollViewBottom.constant = -(datePicker.frame.height - 100)
+        scrollView.contentOffset = CGPoint(x: scrollView.contentOffset.x, y: 50)
     }
 
     @objc func pickedDate(picker: UIDatePicker) {
@@ -118,6 +120,8 @@ class AddEditViewController: UIViewController {
     @objc func removePicker() {
         datePicker.isHidden = true
         taskName.resignFirstResponder()
+        scrollViewBottom.constant = 0.0
+        scrollView.contentOffset = CGPoint(x: scrollView.contentOffset.x, y: 0)
     }
 
     @objc func keyboardWillShow(notification: Notification) {

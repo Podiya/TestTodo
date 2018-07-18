@@ -119,6 +119,7 @@
                         <outlet property="email" destination="8Zh-OJ-qfX" id="M7u-G1-Tii"/>
                         <outlet property="fullName" destination="V8a-ds-SVf" id="MDw-Yo-U9c"/>
                         <outlet property="profileImage" destination="xLY-je-sDR" id="gy9-13-REH"/>
+                        <outlet property="scrollView" destination="Uda-mJ-Ars" id="e2w-fn-bQe"/>
                         <outlet property="scrollViewBottom" destination="Ek6-E3-5GD" id="ctv-bY-siC"/>
                     </connections>
                 </viewController>
@@ -719,6 +720,7 @@
                         <outlet property="datePicker" destination="uyH-Wk-Mhh" id="2d6-gS-n9h"/>
                         <outlet property="dateTime" destination="0SD-rE-dDc" id="EHD-GI-6th"/>
                         <outlet property="isCompleted" destination="u4N-YQ-GFA" id="GOL-EO-zyN"/>
+                        <outlet property="scrollView" destination="LL9-Lu-XvT" id="D5C-bL-N5f"/>
                         <outlet property="scrollViewBottom" destination="h3r-gf-Ptd" id="ZwZ-8t-Izm"/>
                         <outlet property="taskName" destination="x6E-Tu-1PZ" id="z5w-fb-vfA"/>
                         <outletCollection property="priorities" destination="eCh-1R-Gy6" collectionClass="NSMutableArray" id="mIy-8X-Tmr"/>

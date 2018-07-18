@@ -30,6 +30,7 @@ class DBManager {
         try! realm.write {
             realm.add(obj, update: true)
         }
+        realm.invalidate()
     }
 
     func clean() {
@@ -37,11 +38,14 @@ class DBManager {
         try! realm.write {
             realm.deleteAll()
         }
+        realm.invalidate()
     }
 
     func incrementID<T: Object>(classType: T.Type) -> Int {
         let realm = try! Realm()
-        return (realm.objects(classType).max(ofProperty: "id") ?? 0) + 1
+        let id = (realm.objects(classType).max(ofProperty: "id") ?? 0) + 1
+        realm.invalidate()
+        return id
     }
 
     func setDone(ids: [Int]) {
@@ -52,6 +56,7 @@ class DBManager {
                 dao?.isComplete = true
             }
         }
+        realm.invalidate()
     }
 
     @objc private func fetch() {
@@ -66,5 +71,6 @@ class DBManager {
                 dateTime: task.dateTime))
         }
         tasks.value = taskArray
+        realm.invalidate()
     }
 }

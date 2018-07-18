@@ -43,9 +43,9 @@ class HomeTableViewController: UITableViewController {
     @IBAction func didPressEdit(_ sender: UIBarButtonItem) {
         isEditEnabled = !isEditEnabled
         if isEditEnabled {
-            self.navigationItem.rightBarButtonItem?.title = "Done"
+            self.navigationItem.rightBarButtonItem?.title = NavBar.done
         } else {
-            self.navigationItem.rightBarButtonItem?.title = "Edit"
+            self.navigationItem.rightBarButtonItem?.title = NavBar.edit
         }
     }
 
@@ -70,7 +70,7 @@ class HomeTableViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "notDoneCell", for: indexPath) as! TodoTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: TodoCell.notDone, for: indexPath) as! TodoTableViewCell
         cell.task = todoTasks[indexPath.row]
         cell.delegate = self
         cell.indexPath = indexPath
@@ -79,7 +79,7 @@ class HomeTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isEditEnabled {
-            let controller = StoryBoard.get(type: AddEditViewController.self, controller: "AddEditViewController")
+            let controller = StoryBoard.get(type: AddEditViewController.self, controller: AddEdit.className)
             controller.task = todoTasks[indexPath.row]
             controller.taskType = .edit
             controller.taskIndex = viewModel.getIndex(task: todoTasks[indexPath.row])
@@ -92,7 +92,7 @@ class HomeTableViewController: UITableViewController {
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let identifier = segue.identifier else { return }
-        if identifier == "addTodo" {
+        if identifier == AddEdit.segue {
             let controller = (segue.destination as! AddEditViewController)
             controller.taskType = .add
         }
