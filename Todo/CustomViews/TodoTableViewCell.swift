@@ -14,7 +14,6 @@ protocol TodoCellDelegate {
 
 class TodoTableViewCell: UITableViewCell {
 
-
     @IBOutlet weak var priority: UIView!
     @IBOutlet weak var checkDot: UIView!
     @IBOutlet weak var checkView: UIView!

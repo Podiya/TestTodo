@@ -24,7 +24,7 @@ class AddEditViewController: UIViewController {
     var task: Task!
     var taskIndex: Int!
     @IBOutlet weak var datePicker: UIDatePicker!
-    let viewModel = AddEditViewModel()
+    private let viewModel = AddEditViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,12 +63,12 @@ class AddEditViewController: UIViewController {
         if date < Date() {
             Toast(text: Alert.selectFutureDate, duration: Delay.short).show()
         }
-        viewModel.task = Task(
+        viewModel.setTask(task: Task(
             id: viewModel.id,
             name: taskName.text ?? "",
             isCompleted: isCompleted.isOn,
             priority: selectedPriority,
-            dateTime: dateTime.text ?? "")
+            dateTime: dateTime.text ?? ""))
         
         if taskType == .add {
             viewModel.add()

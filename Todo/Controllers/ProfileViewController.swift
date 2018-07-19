@@ -18,24 +18,24 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var contactNumber: UITextField!
     @IBOutlet weak var fullName: UITextField!
     @IBOutlet weak var profileImage: UIImageView!
-    var imagePicker = UIImagePickerController()
-    var viewModel = ProfileViewModel()
+    private var imagePicker = UIImagePickerController()
+    private var viewModel = ProfileViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: Notification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: Notification.Name.UIKeyboardWillHide, object: nil)
         self.view.isUserInteractionEnabled = true
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(remove)))
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(removeResponders)))
         self.profileImage.isUserInteractionEnabled = true
         self.profileImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnProfile)))
         self.scrollView.isScrollEnabled = false
         self.contactNumber.delegate = self
-        viewModel.isExistProfileData { (image, fullName, contactNumber, email) in
-            profileImage.image = image
-            self.fullName.text = fullName
-            self.contactNumber.text = contactNumber
-            self.email.text = email
+        viewModel.get { profile in
+            profileImage.image = profile.image
+            self.fullName.text = profile.name
+            self.contactNumber.text = profile.contactNumber
+            self.email.text = profile.email
         }
     }
 
@@ -44,17 +44,19 @@ class ProfileViewController: UIViewController {
     }
 
     @IBAction func didPressedSave(_ sender: UIBarButtonItem) {
-        remove()
-        guard validate() else {
+        removeResponders()
+        guard viewModel.validate(email: email.text) else {
             Toast(text: Alert.enterCorrectEmail, duration: Delay.short).show()
             return
         }
-        viewModel.saveProfileData(
-            image: profileImage.image,
-            fullName: fullName.text ?? "",
-            contectNumber: contactNumber.text ?? "",
+        let profile = Profile(
+            image: profileImage.image!,
+            name: fullName.text ?? "",
+            contactNumber: contactNumber.text ?? "",
             email: email.text ?? "")
-        Toast(text: Alert.successfulySaved, duration: Delay.short).show()
+        viewModel.save(profile: profile) {
+                Toast(text: Alert.successfulySaved, duration: Delay.short).show()
+        }
     }
 
     @objc func didTapOnProfile(gesture: UITapGestureRecognizer) {
@@ -80,17 +82,10 @@ class ProfileViewController: UIViewController {
         scrollView.contentOffset = CGPoint(x: scrollView.contentOffset.x, y: 0)
     }
 
-    @objc func remove() {
+    @objc func removeResponders() {
         fullName.resignFirstResponder()
         contactNumber.resignFirstResponder()
         email.resignFirstResponder()
-    }
-
-    func validate() -> Bool {
-        if let text = email.text, text != "" {
-            return (email.text?.isEmail)!
-        }
-        return true
     }
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Profile {
+struct ProfileKey {
     static var profileImage = "profile_image"
     static var fullName = "full_name"
     static var contactNumber = "contact_number"
@@ -25,7 +25,7 @@ struct TodoCell {
     static var done = "doneCell"
 }
 
-struct AddEdit {
+struct AddEditController {
     static var className = "notDoneCell"
     static var segue = "addTodo"
 }

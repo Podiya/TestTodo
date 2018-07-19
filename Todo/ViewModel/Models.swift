@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
+// MARK: - Task Model
 class Task: Hashable {
     var id = 0
     var name = ""
@@ -28,5 +30,19 @@ class Task: Hashable {
 
     static func == (lhs: Task, rhs: Task) -> Bool {
         return lhs.id == rhs.id
+    }
+}
+// MARK: - Profile Model
+class Profile {
+    var image: UIImage!
+    var name = ""
+    var contactNumber = ""
+    var email = ""
+
+    init(image: UIImage, name: String, contactNumber: String, email: String) {
+        self.image = image
+        self.name = name
+        self.contactNumber = contactNumber
+        self.email = email
     }
 }

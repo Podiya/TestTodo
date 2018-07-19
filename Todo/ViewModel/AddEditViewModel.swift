@@ -10,13 +10,18 @@ import Foundation
 
 class AddEditViewModel {
 
-    var task: Task!
+    private(set) var task: Task!
     var id: Int {
         return DBManager.shared.incrementID(classType: TaskDAO.self)
     }
 }
 
 extension AddEditViewModel {
+
+    func setTask(task: Task) {
+        self.task = task
+    }
+
     func add() {
         guard let task = task else { return }
         tasks.value.append(task)
@@ -30,7 +35,7 @@ extension AddEditViewModel {
         save(isUpdate: true)
     }
 
-    func save(isUpdate: Bool = false) {
+    private func save(isUpdate: Bool = false) {
         let db = DBManager.shared
         let id = isUpdate ? task.id : db.incrementID(classType: TaskDAO.self)
         db.save(obj: TaskDAO(id: id,

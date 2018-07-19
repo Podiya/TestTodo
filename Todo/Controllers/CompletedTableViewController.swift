@@ -10,9 +10,9 @@ import UIKit
 
 class CompletedTableViewController: UITableViewController {
 
-    var todoTasks: [Task] = []
-    var isEditEnabled = false
-    var viewModel = AddEditViewModel()
+    private var todoTasks: [Task] = []
+    private var isEditEnabled = false
+    private var viewModel = AddEditViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +31,8 @@ class CompletedTableViewController: UITableViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        tasks.bind { (tasks) in
-            self.loadData(tasks: tasks)
+        tasks.bind { [unowned self]  in
+            self.loadData(tasks: $0)
         }
     }
     
@@ -45,7 +45,7 @@ class CompletedTableViewController: UITableViewController {
         }
     }
 
-    func loadData(tasks: [Task]) {
+    private func loadData(tasks: [Task]) {
         self.todoTasks = tasks.filter({ (task) -> Bool in
             return task.isCompleted
         })
@@ -73,7 +73,7 @@ class CompletedTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isEditEnabled {
-            let controller = StoryBoard.get(type: AddEditViewController.self, controller: AddEdit.className)
+            let controller = StoryBoard.get(type: AddEditViewController.self, controller: AddEditController.className)
             controller.task = todoTasks[indexPath.row]
             controller.taskType = .edit
             controller.taskIndex = viewModel.getIndex(task: todoTasks[indexPath.row])

@@ -40,7 +40,6 @@ enum StoryBoard {
     }
 }
 
-
 enum TaskType {
     case add
     case edit
@@ -59,10 +58,6 @@ enum AppData {
         return defaults.object(forKey: key) as AnyObject?
     }
 
-    static func exists(path: String) -> Bool {
-        return FileManager.default.fileExists(atPath: path)
-    }
-
     static func imageForKey(key: String) -> UIImage? {
         var image: UIImage?
         if let imageData = UserDefaults.standard.data(forKey: key) {
@@ -77,10 +72,4 @@ enum AppData {
         }
         AppData.set(imageData!, forKey: key)
     }
-}
-
-enum ImageSaveError: Error {
-    case removeError(error: String)
-    case writeError(error: String)
-    case createDirectoryError(error: String)
 }

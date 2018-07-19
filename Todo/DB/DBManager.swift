@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-var tasks: Box<[Task]> = Box([])
+let tasks: Box<[Task]> = Box([])
 
 class DBManager {
     private init() {}
