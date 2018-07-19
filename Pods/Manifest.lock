@@ -1,0 +1,26 @@
+PODS:
+  - Realm (3.7.4):
+    - Realm/Headers (= 3.7.4)
+  - Realm/Headers (3.7.4)
+  - RealmSwift (3.7.4):
+    - Realm (= 3.7.4)
+  - Toaster (2.1.1)
+
+DEPENDENCIES:
+  - RealmSwift
+  - Toaster
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Realm
+    - RealmSwift
+    - Toaster
+
+SPEC CHECKSUMS:
+  Realm: a469bb59e33f9926102ccaea4349822c53b9117e
+  RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
+  Toaster: a6c9532de1ded8105e77376f7dffeb2e12b46dbb
+
+PODFILE CHECKSUM: e15b2044d4a2d746182735ead75615ddcb41bd31
+
+COCOAPODS: 1.5.3
