@@ -13,7 +13,7 @@ class ProfileViewModel {
     
     func get(completion: (_ profile: Profile) -> Void) {
         completion(Profile(
-            image: AppData.imageForKey(key: ProfileKey.profileImage)!,
+            image: AppData.imageForKey(key: ProfileKey.profileImage),
             name: AppData.object(forKey: ProfileKey.fullName) as? String ?? "",
             contactNumber: AppData.object(forKey: ProfileKey.contactNumber)  as? String ?? "",
             email: AppData.object(forKey: ProfileKey.email) as? String ?? ""))

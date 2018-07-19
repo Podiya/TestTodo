@@ -34,12 +34,12 @@ class Task: Hashable {
 }
 // MARK: - Profile Model
 class Profile {
-    var image: UIImage!
+    var image: UIImage?
     var name = ""
     var contactNumber = ""
     var email = ""
 
-    init(image: UIImage, name: String, contactNumber: String, email: String) {
+    init(image: UIImage?, name: String, contactNumber: String, email: String) {
         self.image = image
         self.name = name
         self.contactNumber = contactNumber

@@ -19,7 +19,7 @@ class AddEditViewController: UIViewController {
     @IBOutlet var priorities: [UIButton]!
     @IBOutlet weak var isCompleted: UISwitch!
     @IBOutlet weak var taskName: UITextField!
-    fileprivate var selectedPriority: Priority = .none
+    fileprivate var selectedPriority: Priority = .p1
     var taskType: TaskType = .add
     var task: Task!
     var taskIndex: Int!
@@ -59,10 +59,13 @@ class AddEditViewController: UIViewController {
     }
 
     @objc func didPressDone() {
+        removePicker()
         guard let date = dateTime.text!.date() else { return }
         if date < Date() {
             Toast(text: Alert.selectFutureDate, duration: Delay.short).show()
+            return
         }
+        
         viewModel.setTask(task: Task(
             id: viewModel.id,
             name: taskName.text ?? "",
@@ -104,6 +107,10 @@ class AddEditViewController: UIViewController {
     }
 
     @objc func tapedOnDateTime(gesture: UITapGestureRecognizer) {
+        guard datePicker.isHidden else {
+            removePicker()
+            return
+        }
         taskName.resignFirstResponder()
         datePicker.addTarget(self, action: #selector(pickedDate), for: .valueChanged)
         datePicker.isHidden = false

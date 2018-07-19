@@ -26,7 +26,7 @@ struct TodoCell {
 }
 
 struct AddEditController {
-    static var className = "notDoneCell"
+    static var className = "AddEditViewController"
     static var segue = "addTodo"
 }
 
